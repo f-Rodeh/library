@@ -34,7 +34,6 @@ header .main-logo {
 }
 
 header {
-  padding: 36px 0;
   gap: 24px;
 }
 
@@ -44,10 +43,11 @@ footer {
   align-items: center;
   justify-content: center;
   background-color: var(--surface-color);
+
+  padding: 36px 0;
 }
 
 footer {
-  padding: 36px 0;
   grid-row-end: -1;
 }
 
