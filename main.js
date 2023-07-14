@@ -30,12 +30,6 @@ function addBookToLibrary(book) {
 
 const cardContainer = document.querySelector('main');
 
-function displayLibrary() {
-  for (const book of myLibrary) {
-    book.display();
-  }
-}
-
 function addElementToCard(parent, type, content){
   const element = document.createElement(type);
   if( content ){
