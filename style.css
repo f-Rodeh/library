@@ -1,6 +1,12 @@
+:root {
+  --main-bg: #111111;
+  --main-txt: #fefefe;
+  --surface-color: #222;
+}
+
 body {
-  background-color: #111111;
-  color: #fefefe;
+  background-color: var(--main-bg);
+  color: var(--main-txt);
   margin: 0;padding: 0;
 }
 
@@ -20,4 +26,5 @@ footer {
   align-items: center;
   justify-content: center;
   height: 68px;
+  background-color: var(--surface-color);
 }
