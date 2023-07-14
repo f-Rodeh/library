@@ -1,3 +1,6 @@
+const cardContainer = document.querySelector('main');
+
+let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
 let myLibrary = [];
 
 function Book(title, author, pagesCount, readByUser) {
@@ -21,14 +24,10 @@ Book.prototype.display = function (){
   if( this.readByUser ) status.classList.add('read');
 }
 
-let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
   book.display();
 }
-
-const cardContainer = document.querySelector('main');
 
 function addElementToCard(parent, type, content){
   const element = document.createElement(type);
