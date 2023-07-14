@@ -19,8 +19,14 @@ body {
   min-height: 100vh;
 }
 
-footer {
-  grid-row-end: -1;
+header .main-logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+header {
+  padding: 36px 0;
+  gap: 24px;
 }
 
 header,
@@ -28,6 +34,10 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 68px;
   background-color: var(--surface-color);
+}
+
+footer {
+  padding: 48px 0;
+  grid-row-end: -1;
 }
