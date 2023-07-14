@@ -1,4 +1,23 @@
 body {
   background-color: #111111;
   color: #fefefe;
+  margin: 0;padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+footer {
+  grid-row-end: -1;
+}
+
+header,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
 }
