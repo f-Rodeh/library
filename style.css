@@ -7,6 +7,7 @@
   --primary-color: #8046FD;
   --low-contrast-txt: #b3b3b3;
   --finished-book-color: #28B03B;
+  --shadow-color: rgba(0, 0, 0, 0.5);
 }
 
 :visited {
@@ -48,6 +49,10 @@ main {
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: 4px;
+}
+
+.card:hover {
+  box-shadow: 6px 6px 5px var(--shadow-color);
 }
 
 .card.new {
