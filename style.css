@@ -47,6 +47,14 @@ main {
 
   display: grid;
   grid-template-rows: auto auto 1fr auto;
+  gap: 4px;
+}
+
+.card.new {
+  grid-template-rows: repeat(2, min-content);
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
 }
 
 .read-status {
