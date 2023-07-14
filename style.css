@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 :root {
   --main-bg: #111111;
   --main-txt: #fefefe;
@@ -5,9 +7,10 @@
 }
 
 body {
+  font-family: 'Poppins', Helvetica, sans-serif;
   background-color: var(--main-bg);
   color: var(--main-txt);
-  margin: 0;padding: 0;
+  margin: 0; padding: 0;
 }
 
 .grid-container {
