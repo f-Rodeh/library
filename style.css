@@ -3,7 +3,16 @@
 :root {
   --main-bg: #111111;
   --main-txt: #fefefe;
-  --surface-color: #222;
+  --surface-color: #222222;
+  --primary-color: #8046FD;
+}
+
+:visited {
+  color: var(--primary-color);
+}
+
+* {
+  transition: all 150ms ease-in-out;
 }
 
 body {
@@ -38,6 +47,24 @@ footer {
 }
 
 footer {
-  padding: 48px 0;
+  padding: 36px 0;
   grid-row-end: -1;
+}
+
+footer a {
+  text-decoration: none;
+  font-size: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+footer a:hover {
+  scale: 1.1;
+}
+
+ion-icon {
+  color: var(--main-txt);
+  font-size: 40px;
 }
