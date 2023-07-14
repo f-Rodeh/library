@@ -24,7 +24,7 @@ body {
   margin: 0; padding: 0;
 }
 
-.grid-container {
+.page-container {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -49,20 +49,6 @@ main {
   grid-template-rows: auto auto 1fr auto;
 }
 
-.card h1 {
-  color: var(--main-txt);
-  font-size: 1.2rem;
-  margin: 0;
-}
-.card h2{
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.card span {
-  font-size: 1rem;
-}
-
 .read-status {
   justify-self: end;
 }
@@ -81,15 +67,6 @@ main {
   border: 2px solid var(--low-contrast-txt);
 }
 
-header .main-logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-header {
-  gap: 24px;
-}
-
 header,
 footer {
   display: flex;
@@ -98,10 +75,7 @@ footer {
   background-color: var(--surface-color);
 
   padding: 36px 0;
-}
-
-footer {
-  grid-row-end: -1;
+  gap: 24px;
 }
 
 footer a {
@@ -120,4 +94,17 @@ footer a:hover {
 ion-icon {
   color: var(--main-txt);
   font-size: 40px;
+}
+
+/* text styling */
+h1 {
+  font-size: 1.2rem;
+}
+.card h1 {
+  color: var(--main-txt);
+  margin: 0;
+}
+.card h2{
+  font-size: 1.1rem;
+  margin: 0;
 }
