@@ -15,14 +15,17 @@ Book.prototype.display = function (){
   addElementToCard(card, 'h1', this.title);
   addElementToCard(card, 'h2', this.author);
   addElementToCard(card, 'span', this.pagesCount + ' pages');
-  addElementToCard(card, 'div')
-    .classList.add('read-status');
+
+  const status = addElementToCard(card, 'div');
+  status.classList.add('read-status');
+  if( this.readByUser ) status.classList.add('read');
 }
 
 let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  book.display();
 }
 
 const cardContainer = document.querySelector('main');
