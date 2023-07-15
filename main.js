@@ -1,4 +1,5 @@
 const cardContainer = document.querySelector('main');
+const newCardButton = document.querySelector('.card.new');
 
 let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
 let myLibrary = [];
@@ -37,3 +38,7 @@ function addElementToCard(parent, type, content){
   parent.appendChild(element);
   return element;
 }
+
+newCardButton.addEventListener('click', () =>{
+  addBookToLibrary(hungerGames);
+})
