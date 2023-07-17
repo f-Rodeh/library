@@ -154,6 +154,8 @@ form.book-info-content {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 12px;
+  row-gap: 18px;
+  margin-bottom: 18px;
   align-items: baseline;
 }
 
@@ -184,21 +186,35 @@ label {
   text-align: end;
 }
 
-button[type='submit'] {
-  display: block;
+.buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 24px 0;
+  gap: 12px;
 }
 
-.book-info-modal input {
-  margin-bottom: 18px;
+.buttons > * {
+  flex: 1;
+  min-width: max-content;
+}
+
+.primary-button {
+  flex-grow: 2;
+  background-color: var(--primary-color);
+  border: none;
+}
+
+.secondary-button {
+  background-color: transparent;
+  border: 2px solid var(--low-contrast-txt);
 }
 
 .book-info-modal button {
   padding: 12px 24px;
-  margin: 24px auto;
   font-weight: bold;
   border-radius: 6px;
-  border: none;
-  background-color: var(--primary-color);
   color: var(--main-txt);
   font-size: 0.9rem;
 }
