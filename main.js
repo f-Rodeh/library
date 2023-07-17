@@ -1,5 +1,7 @@
 const cardContainer = document.querySelector('main');
 const newCardButton = document.querySelector('.card.new');
+const infoModal = document.querySelector('.book-info-modal');
+const dismissButton = document.querySelector('.book-info-modal .dismiss-modal');
 
 let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
 let myLibrary = [];
@@ -41,4 +43,14 @@ function addElementToCard(parent, type, content){
 
 newCardButton.addEventListener('click', () =>{
   addBookToLibrary(hungerGames);
+})
+
+dismissButton.addEventListener('click', () => {
+  infoModal.remove();
+})
+
+infoModal.addEventListener('click', (e) => {
+  if(e.target === infoModal){
+    infoModal.remove();
+  }
 })
