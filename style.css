@@ -200,13 +200,13 @@ label {
   min-width: max-content;
 }
 
-.primary-button {
+.book-info-modal .primary {
   flex-grow: 2;
   background-color: var(--primary-color);
   border: none;
 }
 
-.secondary-button {
+.book-info-modal .dismiss {
   background-color: transparent;
   border: 2px solid var(--low-contrast-txt);
 }

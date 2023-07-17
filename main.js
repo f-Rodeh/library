@@ -1,7 +1,7 @@
 const cardContainer = document.querySelector('main');
 const newCardButton = document.querySelector('.card.new');
+const pageContainer = document.querySelector('.page-container');
 const infoModal = document.querySelector('.book-info-modal');
-const dismissButton = document.querySelector('.book-info-modal .dismiss-modal');
 
 let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
 let myLibrary = [];
@@ -27,6 +27,25 @@ Book.prototype.display = function (){
   if( this.readByUser ) status.classList.add('read');
 }
 
+HTMLElement.prototype.addInput = function(type, id, label, placeholder) {
+  const inputLabel = document.createElement('label');
+  inputLabel.textContent = label;
+  inputLabel.htmlFor = id;
+
+  const inputElement = document.createElement('input');
+  inputElement.type = type;
+  inputElement.id = id;
+  if( placeholder ) inputElement.placeholder = placeholder;
+
+  if ( type === 'checkbox') {
+    this.appendChild(inputElement);
+    this.appendChild(inputLabel);
+  } else {
+    this.appendChild(inputLabel);
+    this.appendChild(inputElement);
+  }
+}
+
 function addBookToLibrary(book) {
   myLibrary.push(book);
   book.display();
@@ -46,16 +65,6 @@ newCardButton.addEventListener('click', () =>{
   addBookToLibrary(hungerGames);
 })
 
-dismissButton.addEventListener('click', () => {
-  infoModal.remove();
-})
-
-infoModal.addEventListener('click', (e) => {
-  if(e.target === infoModal){
-    infoModal.remove();
-  }
-})
-
 function addInfoModal() {
   const modal = document.createElement('div');
   const content = generateModalContent('New book');
@@ -69,7 +78,14 @@ function addInfoModal() {
   content.appendChild(actions);
   modal.appendChild(content);
 
+  modal.addEventListener('click', (e) => {
+    if( e.target === modal) modal.remove();
+  })
+
+  actions.lastChild.addEventListener('click', () => modal.remove())
+
   console.log(modal);
+  pageContainer.appendChild(modal);
 }
 
 function generateModalContent( modalTitle ) {
@@ -94,31 +110,14 @@ function generateModalActions( primaryTitle, dismissTitle ) {
   const dismiss = document.createElement('button');
 
   primary.classList.add('primary');
-  dismiss.classList.add('dismiss')
-
   primary.textContent = primaryTitle;
+  primary.type = 'submit';
+
+  dismiss.classList.add('dismiss')
   dismiss.textContent = dismissTitle;
+  dismiss.type = 'button';
 
   root.appendChild(primary);
   root.appendChild(dismiss);
   return root;
-}
-
-HTMLElement.prototype.addInput = function(type, id, label, placeholder) {
-  const inputLabel = document.createElement('label');
-  inputLabel.textContent = label;
-  inputLabel.htmlFor = id;
-
-  const inputElement = document.createElement('input');
-  inputElement.type = type;
-  inputElement.id = id;
-  if( placeholder ) inputElement.placeholder = placeholder;
-
-  if ( type === 'checkbox') {
-    this.appendChild(inputElement);
-    this.appendChild(inputLabel);
-  } else {
-    this.appendChild(inputLabel);
-    this.appendChild(inputElement);
-  }
 }
