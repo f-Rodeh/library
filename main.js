@@ -42,6 +42,7 @@ function addElementToCard(parent, type, content){
 }
 
 newCardButton.addEventListener('click', () =>{
+  addInfoModal();
   addBookToLibrary(hungerGames);
 })
 
@@ -54,3 +55,70 @@ infoModal.addEventListener('click', (e) => {
     infoModal.remove();
   }
 })
+
+function addInfoModal() {
+  const modal = document.createElement('div');
+  const content = generateModalContent('New book');
+  const actions = generateModalActions('Add to library', 'Cancel');
+
+  modal.classList.add('book-info-modal');
+  content.classList.add('book-info-content');
+  actions.classList.add('buttons')
+
+  content.addInput('checkbox', 'read-by-user', "I've read this book");
+  content.appendChild(actions);
+  modal.appendChild(content);
+
+  console.log(modal);
+}
+
+function generateModalContent( modalTitle ) {
+  const root = document.createElement('form');
+  const title = document.createElement('h1');
+  title.textContent = modalTitle;
+
+  const inputGrid = document.createElement('div');
+  inputGrid.addInput('text', 'title', 'Title:', 'The Hunger Games');
+  inputGrid.addInput('text', 'author', 'Author:', 'Suzanne Collins');
+  inputGrid.addInput('number', 'pages', 'Pages:', '386');
+  inputGrid.classList.add('input-grid')
+
+  root.appendChild(title);
+  root.appendChild(inputGrid);
+  return root;
+}
+
+function generateModalActions( primaryTitle, dismissTitle ) {
+  const root = document.createElement('div');
+  const primary = document.createElement('button');
+  const dismiss = document.createElement('button');
+
+  primary.classList.add('primary');
+  dismiss.classList.add('dismiss')
+
+  primary.textContent = primaryTitle;
+  dismiss.textContent = dismissTitle;
+
+  root.appendChild(primary);
+  root.appendChild(dismiss);
+  return root;
+}
+
+HTMLElement.prototype.addInput = function(type, id, label, placeholder) {
+  const inputLabel = document.createElement('label');
+  inputLabel.textContent = label;
+  inputLabel.htmlFor = id;
+
+  const inputElement = document.createElement('input');
+  inputElement.type = type;
+  inputElement.id = id;
+  if( placeholder ) inputElement.placeholder = placeholder;
+
+  if ( type === 'checkbox') {
+    this.appendChild(inputElement);
+    this.appendChild(inputLabel);
+  } else {
+    this.appendChild(inputLabel);
+    this.appendChild(inputElement);
+  }
+}
