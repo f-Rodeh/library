@@ -81,10 +81,10 @@ function addInfoModal() {
   modal.addEventListener('click', (e) => {
     if( e.target === modal) modal.remove();
   })
+  actions.lastChild.addEventListener('click', () => {
+    modal.remove()
+  })
 
-  actions.lastChild.addEventListener('click', () => modal.remove())
-
-  console.log(modal);
   pageContainer.appendChild(modal);
 }
 
