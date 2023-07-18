@@ -70,6 +70,19 @@ HTMLElement.prototype.addInputPair = function (type, id, label, placeholder){
 }
 
 Modal.prototype.toNode = function() {
+  const root = createElement('div', '', 'modal');
+  const content = this.content;
+  content.classList.add('content');
+
+  // append actions to content
+  const actionsContainer = createElement('div', '', 'actions');
+  for (const key in this.actions) {
+    if (Object.hasOwnProperty.call(this.actions, key)) {
+      actionsContainer.append(this.actions[key].toNode())
+    }
+  }
+  content.append(actionsContainer)
+  root.append(this.content);
   return root;
 }
 
