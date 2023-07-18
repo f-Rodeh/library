@@ -27,25 +27,6 @@ Book.prototype.display = function (){
   if( this.readByUser ) status.classList.add('read');
 }
 
-HTMLElement.prototype.addInput = function(type, id, label, placeholder) {
-  const inputLabel = document.createElement('label');
-  inputLabel.textContent = label;
-  inputLabel.htmlFor = id;
-
-  const inputElement = document.createElement('input');
-  inputElement.type = type;
-  inputElement.id = id;
-  if( placeholder ) inputElement.placeholder = placeholder;
-
-  if ( type === 'checkbox') {
-    this.appendChild(inputElement);
-    this.appendChild(inputLabel);
-  } else {
-    this.appendChild(inputLabel);
-    this.appendChild(inputElement);
-  }
-}
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
   book.display();
@@ -65,59 +46,74 @@ newCardButton.addEventListener('click', () =>{
   addBookToLibrary(hungerGames);
 })
 
-function addInfoModal() {
-  const modal = document.createElement('div');
-  const content = generateModalContent('New book');
-  const actions = generateModalActions('Add to library', 'Cancel');
-
-  modal.classList.add('book-info-modal');
-  content.classList.add('book-info-content');
-  actions.classList.add('buttons')
-
-  content.addInput('checkbox', 'read-by-user', "I've read this book");
-  content.appendChild(actions);
-  modal.appendChild(content);
-
-  modal.addEventListener('click', (e) => {
-    if( e.target === modal) modal.remove();
-  })
-  actions.lastChild.addEventListener('click', () => {
-    modal.remove()
-  })
-
-  pageContainer.appendChild(modal);
+// Modal generator
+function Modal(title, content = [], actions = {}) {
+  this.title = title;
+  this.content = content;
+  this.actions = actions;
 }
 
-function generateModalContent( modalTitle ) {
-  const root = document.createElement('form');
-  const title = document.createElement('h1');
-  title.textContent = modalTitle;
+function ModalAction(name, action){
+  this.name = name;
+  this.action = action;
+}
 
-  const inputGrid = document.createElement('div');
-  inputGrid.addInput('text', 'title', 'Title:', 'The Hunger Games');
-  inputGrid.addInput('text', 'author', 'Author:', 'Suzanne Collins');
-  inputGrid.addInput('number', 'pages', 'Pages:', '386');
-  inputGrid.classList.add('input-grid')
+HTMLElement.prototype.addInputPair = function (type, id, label, placeholder){
+  type === 'checkbox' ? this.append(
+    createInput(type, id),
+    createLabel(id, label)
+  ) :
+  this.append(
+    createLabel(id, label), 
+    createInput(type, id, placeholder)
+  )
+}
 
-  root.appendChild(title);
-  root.appendChild(inputGrid);
+Modal.prototype.toNode = function() {
   return root;
 }
 
-function generateModalActions( primaryTitle, dismissTitle ) {
-  const root = document.createElement('div');
-  const primary = document.createElement('button');
-  const dismiss = document.createElement('button');
-
-  primary.classList.add('primary');
-  primary.textContent = primaryTitle;
-  primary.type = 'submit';
-
-  dismiss.classList.add('dismiss')
-  dismiss.textContent = dismissTitle;
-  dismiss.type = 'button';
-
-  root.appendChild(primary);
-  root.appendChild(dismiss);
-  return root;
+ModalAction.prototype.toNode = function(cls, type = 'button'){
+  const root = createElement('button', this.name, cls);
+  root.type = type;
+  root.addEventListener('click', () => {
+    this.action();
+  })
+  return root
 }
+
+function createLabel(id, content) {
+  const label = createElement('label', content);
+  label.htmlFor = id;
+  return label;
+}
+
+function createInput(type, id, placeholder = '') {
+  const input = createElement('input');
+  input.type = type;
+  input.id = id;
+  input.placeholder = placeholder;
+  return input
+}
+
+function createElement(type, content, cls) {
+  const element = document.createElement(type);
+  element.textContent = content;
+  element.classList.add(cls);
+  return element;
+}
+
+// My modal
+const newBookForm = document.createElement('form');
+const inputGrid = createElement('div', '', 'input-grid');
+inputGrid.addInputPair('text', 'title', 'Title:', 'The Hunger Games');
+inputGrid.addInputPair('text', 'author', 'Author:', 'Suzanne Collins');
+inputGrid.addInputPair('number', 'pages', 'Pages:', '384');
+
+newBookForm.append(inputGrid);
+newBookForm.addInputPair('checkbox', 'read-by-user', "I've read this book");
+
+const inputBook = new Modal('New Book');
+inputBook.content = newBookForm;
+inputBook.actions.primary = new ModalAction('Add to library', addBookToLibrary);
+inputBook.actions.dismiss = new ModalAction('Cancel');
