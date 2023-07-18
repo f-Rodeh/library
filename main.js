@@ -83,7 +83,16 @@ Modal.prototype.toNode = function() {
   }
   content.append(actionsContainer)
   root.append(this.content);
+
+  // add self DOM reference
+  this.domReference = root;
   return root;
+}
+
+Modal.prototype.removeSelf = function(){
+  if( this.domReference ){
+    this.domReference.remove();
+  }
 }
 
 ModalAction.prototype.toNode = function(cls, type = 'button'){
@@ -127,7 +136,7 @@ newBookForm.addInputPair('checkbox', 'read-by-user', "I've read this book");
 const inputBook = new Modal('New Book');
 inputBook.content = newBookForm;
 inputBook.actions.primary = new ModalAction('Add to library', addBookToLibrary);
-inputBook.actions.dismiss = new ModalAction('Cancel');
+inputBook.actions.dismiss = new ModalAction('Cancel', inputBook.removeSelf);
 
 // call the modal
 newCardButton.addEventListener('click', () =>{
