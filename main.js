@@ -143,7 +143,6 @@ function addBookToLibrary() {
   console.log(book)
   myLibrary.push(book);
   book.display();
-  deleteValues();
   newBookModal.dismiss();
 }
 
