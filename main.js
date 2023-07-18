@@ -56,6 +56,11 @@ Modal.prototype.build = function() {
 Modal.prototype.display = function() {
   const root = createElement('div', '', 'modal');
   root.append(this.content);
+
+  root.addEventListener('click', (e) => {
+    if(e.target === root) this.dismiss();
+  })
+
   this.domReference = root;
   pageContainer.append(root);
 }
