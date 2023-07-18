@@ -32,6 +32,7 @@ function addBookToLibrary(book) {
   book.display();
 }
 
+// TODO: replace usage with createElement()
 function addElementToCard(parent, type, content){
   const element = document.createElement(type);
   if( content ){
@@ -40,11 +41,6 @@ function addElementToCard(parent, type, content){
   parent.appendChild(element);
   return element;
 }
-
-newCardButton.addEventListener('click', () =>{
-  addInfoModal();
-  addBookToLibrary(hungerGames);
-})
 
 // Modal generator
 function Modal(title, content = [], actions = {}) {
@@ -130,3 +126,9 @@ const inputBook = new Modal('New Book');
 inputBook.content = newBookForm;
 inputBook.actions.primary = new ModalAction('Add to library', addBookToLibrary);
 inputBook.actions.dismiss = new ModalAction('Cancel');
+
+// call the modal
+newCardButton.addEventListener('click', () =>{
+  pageContainer.append(inputBook.toNode());
+  addBookToLibrary(hungerGames);
+})
