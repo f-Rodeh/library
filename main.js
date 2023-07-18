@@ -112,7 +112,7 @@ function createInput(type, id, placeholder = '') {
 function createElement(type, content, cls) {
   const element = document.createElement(type);
   element.textContent = content;
-  element.classList.add(cls);
+  if(cls) element.classList.add(cls);
   return element;
 }
 
