@@ -126,7 +126,7 @@ h1 {
 }
 
 /* modal */
-.book-info-modal {
+.modal {
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -136,7 +136,7 @@ h1 {
   align-items: center;
 }
 
-form.book-info-content {
+.modal form.content {
   background-color: var(--surface-color);
   width: 25%;
   min-width: 220px;
@@ -146,7 +146,7 @@ form.book-info-content {
   border-radius: var(--card-radius);
 }
 
-.book-info-modal h1 {
+.modal h1 {
   margin-bottom: 24px;
 }
 
@@ -186,7 +186,7 @@ label {
   text-align: end;
 }
 
-.buttons {
+.modal .actions {
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -195,23 +195,23 @@ label {
   gap: 12px;
 }
 
-.buttons > * {
+.modal .actions > * {
   flex: 1;
   min-width: max-content;
 }
 
-.book-info-modal .primary {
+.modal .primary {
   flex-grow: 2;
   background-color: var(--primary-color);
   border: none;
 }
 
-.book-info-modal .dismiss {
+.modal .dismiss {
   background-color: transparent;
   border: 2px solid var(--low-contrast-txt);
 }
 
-.book-info-modal button {
+.modal button {
   padding: 12px 24px;
   font-weight: bold;
   border-radius: 6px;
