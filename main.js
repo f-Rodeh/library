@@ -134,6 +134,9 @@ newCardButton.addEventListener('click', () =>{
 })
 
 function addBookToLibrary() {
+  if(!(title.value && author.value && pages.value)){
+    return;
+  }
   const book = new Book(
     title.value,
     author.value,
