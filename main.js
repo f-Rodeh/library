@@ -69,6 +69,10 @@ Modal.prototype.toNode = function() {
   const root = createElement('div', '', 'modal');
   const content = this.content;
   content.classList.add('content');
+  content.insertBefore(
+    createElement('h1', this.title), 
+    content.firstElementChild
+  )
 
   // append actions to content
   const actionsContainer = createElement('div', '', 'actions');
@@ -85,9 +89,7 @@ Modal.prototype.toNode = function() {
 ModalAction.prototype.toNode = function(cls, type = 'button'){
   const root = createElement('button', this.name, cls);
   root.type = type;
-  root.addEventListener('click', () => {
-    this.action();
-  })
+  root.addEventListener('click', this.action)
   return root
 }
 
@@ -130,5 +132,4 @@ inputBook.actions.dismiss = new ModalAction('Cancel');
 // call the modal
 newCardButton.addEventListener('click', () =>{
   pageContainer.append(inputBook.toNode());
-  addBookToLibrary(hungerGames);
 })
