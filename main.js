@@ -42,11 +42,26 @@ function addElementToCard(parent, type, content){
   return element;
 }
 
-// Modal generator
-function Modal(title, content = [], actions = {}) {
-  this.title = title;
-  this.content = content;
-  this.actions = actions;
+function Modal(title, type) {
+  this.content = createElement(type, '', 'content');
+  this.title = createElement('h1', title);
+  this.actions = createElement('div', '', 'actions');
+}
+
+Modal.prototype.build = function() {
+  this.content.insertBefore(this.title, this.content.firstElementChild);
+  this.content.append(this.actions);
+}
+
+Modal.prototype.display = function() {
+  const root = createElement('div', '', 'modal');
+  root.append(this.content);
+  this.domReference = root;
+  pageContainer.append(root);
+}
+
+Modal.prototype.dismiss = function() {
+  this.domReference.remove()
 }
 
 function ModalAction(name, action){
@@ -65,40 +80,12 @@ HTMLElement.prototype.addInputPair = function (type, id, label, placeholder){
   )
 }
 
-Modal.prototype.toNode = function() {
-  const root = createElement('div', '', 'modal');
-  const content = this.content;
-  content.classList.add('content');
-  content.insertBefore(
-    createElement('h1', this.title), 
-    content.firstElementChild
-  )
-
-  // append actions to content
-  const actionsContainer = createElement('div', '', 'actions');
-  for (const key in this.actions) {
-    if (Object.hasOwnProperty.call(this.actions, key)) {
-      actionsContainer.append(this.actions[key].toNode(key))
-    }
-  }
-  content.append(actionsContainer)
-  root.append(this.content);
-
-  // add self DOM reference
-  this.domReference = root;
-  return root;
-}
-
-Modal.prototype.removeSelf = function(){
-  if( this.domReference ){
-    this.domReference.remove();
-  }
-}
-
 ModalAction.prototype.toNode = function(cls, type = 'button'){
   const root = createElement('button', this.name, cls);
   root.type = type;
-  root.addEventListener('click', this.action)
+  root.addEventListener('click', () => {
+    this.action();
+  })
   return root
 }
 
@@ -124,21 +111,26 @@ function createElement(type, content, cls) {
 }
 
 // My modal
-const newBookForm = document.createElement('form');
+const newBookModal = new Modal('New Book', 'form');
+
+const addBookAction = new ModalAction('Add to library', addBookToLibrary);
+const dismissAction = new ModalAction('Cancel', newBookModal.dismiss.bind(newBookModal));
+
+newBookModal.actions.append(
+  addBookAction.toNode('primary'),
+  dismissAction.toNode('dismiss')
+)
+
 const inputGrid = createElement('div', '', 'input-grid');
 inputGrid.addInputPair('text', 'title', 'Title:', 'The Hunger Games');
 inputGrid.addInputPair('text', 'author', 'Author:', 'Suzanne Collins');
 inputGrid.addInputPair('number', 'pages', 'Pages:', '384');
 
-newBookForm.append(inputGrid);
-newBookForm.addInputPair('checkbox', 'read-by-user', "I've read this book");
-
-const inputBook = new Modal('New Book');
-inputBook.content = newBookForm;
-inputBook.actions.primary = new ModalAction('Add to library', addBookToLibrary);
-inputBook.actions.dismiss = new ModalAction('Cancel', inputBook.removeSelf);
+newBookModal.content.append(inputGrid);
+newBookModal.content.addInputPair('checkbox', 'read-by-user', "I've read this book");
+newBookModal.build();
 
 // call the modal
 newCardButton.addEventListener('click', () =>{
-  pageContainer.append(inputBook.toNode());
+ newBookModal.display();
 })
