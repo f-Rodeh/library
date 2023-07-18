@@ -78,7 +78,7 @@ Modal.prototype.toNode = function() {
   const actionsContainer = createElement('div', '', 'actions');
   for (const key in this.actions) {
     if (Object.hasOwnProperty.call(this.actions, key)) {
-      actionsContainer.append(this.actions[key].toNode())
+      actionsContainer.append(this.actions[key].toNode(key))
     }
   }
   content.append(actionsContainer)
