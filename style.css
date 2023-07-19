@@ -65,20 +65,20 @@ main {
   gap: 12px;
 }
 
-.read-status {
+.card-footer {
   justify-self: end;
 
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
-.read-status ion-icon {
+.card-footer ion-icon {
   font-size: 32px;
   color: var(--low-contrast-txt);
 }
 
-.read-status ion-icon:hover {
+.card-footer ion-icon:hover {
   color: var(--main-txt);
 }
 

@@ -17,29 +17,34 @@ function Book(title, author, pagesCount, readByUser) {
 }
 
 Book.prototype.display = function (index){
-  const card = createElement('div', '', 'card')
-  cardContainer.append(card);
-
+  const card = createElement('div', '', 'card');
+  const cardFooter = createCardFooter(this);
   card.append(
     createElement('h1', this.title),
     createElement('h2', this.author),
-    createElement('span', this.pagesCount + ' pages')
+    createElement('span', this.pagesCount + ' pages'),
+    cardFooter
   );
-
-  const status = createElement('div', '', 'read-status');
-  if( this.readByUser ) status.classList.add('read');
-
-  status.append(
-    createIcon('trash-outline', deleteCard, index),
-    createIcon('sync-outline')
-  )
-  status.classList.add('card-indexed');
-
-  card.append(status)
   this.domReference = card;
+  cardContainer.append(card);
 }
+
 for (let i = 0; i < myLibrary.length; i++) {
   myLibrary[i].display(i)
+}
+
+function createCardFooter(book) {
+  const root = createElement('div', '', 'card-footer');
+  const status = createElement('div', '', 'read-status');
+  if(book.readByUser){
+    status.classList.add('read');
+  }
+  root.append(
+    createIcon('trash-outline', deleteCard),
+    createIcon('sync-outline'),
+    status
+  )
+  return root;
 }
 
 function assignIndices(){
@@ -57,7 +62,7 @@ Book.prototype.delete = function() {
   this.domReference.remove();
 }
 
-function createIcon(name, action, index) {
+function createIcon(name, action) {
   const icon = createElement('ion-icon');
   icon.name = name;
   if (action) icon.addEventListener('click', action.bind(icon));
