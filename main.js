@@ -48,11 +48,9 @@ function createCardFooter(book) {
 }
 
 function assignIndices(){
-  const elements = document.querySelectorAll('.card-indexed');
+  const footers = document.querySelectorAll('.card-footer');
   let i = 0;
-  elements.forEach(element => {
-    if(element.classList.contains('new')) return;
-
+  footers.forEach(element => {
     element.dataset.cardIndex = i;
     i++
   });
