@@ -1,19 +1,22 @@
 const cardContainer = document.querySelector('main');
 const newCardButton = document.querySelector('.card.new');
 const pageContainer = document.querySelector('.page-container');
-const infoModal = document.querySelector('.book-info-modal');
+const infoModal = document.querySelector('.book-info-modal'); 
 
-let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true)
-let myLibrary = [];
+let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true);
+let dorianGray = new Book('The picture of Dorian Gray', 'Oscar Wilde', 384, false);
+let wutheringHeights = new Book('Wuthering Heights', 'Emily Bronte', 426, false);
+let myLibrary = [hungerGames, dorianGray, wutheringHeights];
 
 function Book(title, author, pagesCount, readByUser) {
   this.title = title;
   this.author = author;
   this.pagesCount = pagesCount;
   this.readByUser  = readByUser;
+  this.domReference = null;
 }
 
-Book.prototype.display = function (){
+Book.prototype.display = function (index){
   const card = createElement('div', '', 'card')
   cardContainer.append(card);
 
@@ -27,17 +30,46 @@ Book.prototype.display = function (){
   if( this.readByUser ) status.classList.add('read');
 
   status.append(
-    createIcon('trash-outline'),
+    createIcon('trash-outline', deleteCard, index),
     createIcon('sync-outline')
   )
+  status.classList.add('card-indexed');
 
   card.append(status)
+  this.domReference = card;
+}
+for (let i = 0; i < myLibrary.length; i++) {
+  myLibrary[i].display(i)
 }
 
-function createIcon(name) {
+function assignIndices(){
+  const elements = document.querySelectorAll('.card-indexed');
+  let i = 0;
+  elements.forEach(element => {
+    if(element.classList.contains('new')) return;
+
+    element.dataset.cardIndex = i;
+    i++
+  });
+}
+
+Book.prototype.delete = function() {
+  this.domReference.remove();
+}
+
+function createIcon(name, action, index) {
   const icon = createElement('ion-icon');
   icon.name = name;
+  if (action) icon.addEventListener('click', action.bind(icon));
   return icon;
+}
+
+function deleteCard() {
+  assignIndices();
+  const parent = this.parentNode;
+  const index = parent.dataset.cardIndex;
+  myLibrary[index].delete();
+  myLibrary.splice(index, 1);
 }
 
 // modal generation
