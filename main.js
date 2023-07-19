@@ -14,20 +14,33 @@ function Book(title, author, pagesCount, readByUser) {
 }
 
 Book.prototype.display = function (){
-  const card = document.createElement('div');
-  card.classList.add('card');
-  cardContainer.appendChild(card);
+  const card = createElement('div', '', 'card')
+  cardContainer.append(card);
 
-  card.append(createElement('h1', this.title));
-  card.append(createElement('h2', this.author));
-  card.append(createElement('span', this.pagesCount + ' pages'));
+  card.append(
+    createElement('h1', this.title),
+    createElement('h2', this.author),
+    createElement('span', this.pagesCount + ' pages')
+  );
 
   const status = createElement('div', '', 'read-status');
   if( this.readByUser ) status.classList.add('read');
+
+  status.append(
+    createIcon('trash-outline'),
+    createIcon('sync-outline')
+  )
+
   card.append(status)
 }
 
+function createIcon(name) {
+  const icon = createElement('ion-icon');
+  icon.name = name;
+  return icon;
+}
 
+// modal generation
 function Modal(title, type) {
   this.content = createElement(type, '', 'content');
   this.title = createElement('h1', title);
