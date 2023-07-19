@@ -41,7 +41,7 @@ function createCardFooter(book) {
   }
   root.append(
     createIcon('trash-outline', deleteCard),
-    createIcon('sync-outline'),
+    createIcon('book-outline', changeReadStatus),
     status
   )
   return root;
@@ -73,6 +73,14 @@ function deleteCard() {
   const index = parent.dataset.cardIndex;
   myLibrary[index].delete();
   myLibrary.splice(index, 1);
+}
+
+function changeReadStatus() {
+  assignIndices();
+  const parent = this.parentNode;
+  const index = parent.dataset.cardIndex;
+  myLibrary[index].readByUser = !myLibrary[index].readByUser;
+  parent.lastElementChild.classList.toggle('read');
 }
 
 // modal generation
