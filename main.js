@@ -3,10 +3,7 @@ const newCardButton = document.querySelector('.card.new');
 const pageContainer = document.querySelector('.page-container');
 const infoModal = document.querySelector('.book-info-modal'); 
 
-let hungerGames = new Book('The hunger games', 'Suzzane Collins', 384, true);
-let dorianGray = new Book('The picture of Dorian Gray', 'Oscar Wilde', 169, false);
-let wutheringHeights = new Book('Wuthering Heights', 'Emily Bronte', 426, false);
-let myLibrary = [hungerGames, dorianGray, wutheringHeights];
+let myLibrary = [];
 
 function Book(title, author, pagesCount, readByUser) {
   this.title = title;
