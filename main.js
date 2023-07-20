@@ -39,9 +39,9 @@ function createCardFooter(book) {
   if(book.readByUser){
     status.classList.add('read');
   }
+  status.addEventListener('click', changeReadStatus)
   root.append(
     createIcon('trash-outline', deleteCard),
-    createIcon('book-outline', changeReadStatus),
     status
   )
   return root;
@@ -80,8 +80,8 @@ function changeReadStatus() {
   assignIndices();
   const parent = this.parentNode;
   const index = parent.dataset.cardIndex;
-  myLibrary[index].readByUser = !myLibrary[index].readByUser;
-  parent.lastElementChild.classList.toggle('read');
+  myLibrary[index].readByUser = !myLibrary[index].readByUser; // toggle status in array
+  this.classList.toggle('read');
 }
 
 // modal generation
