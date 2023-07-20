@@ -96,6 +96,7 @@ Modal.prototype.build = function() {
 }
 
 Modal.prototype.display = function() {
+  this.build();
   const root = createElement('div', '', 'modal');
   root.append(this.content);
 
@@ -173,7 +174,6 @@ const pages = inputGrid.addInputPair('number', 'pages', 'Pages:', '384');
 
 newBookModal.content.append(inputGrid);
 const readByUser = newBookModal.content.addInputPair('checkbox', 'read-by-user', "I've read this book");
-newBookModal.build();
 
 // call the modal
 newCardButton.addEventListener('click', () =>{
