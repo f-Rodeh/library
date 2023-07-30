@@ -5,25 +5,31 @@ const infoModal = document.querySelector('.book-info-modal');
 
 let myLibrary = [];
 
-function Book(title, author, pagesCount, readByUser) {
-  this.title = title;
-  this.author = author;
-  this.pagesCount = pagesCount;
-  this.readByUser  = readByUser;
-  this.domReference = null;
-}
+class Book {
+  constructor(title, author, pagesCount, readByUser){
+    this.title = title ;
+    this.author = author ;
+    this.pagesCount = pagesCount ;
+    this.readByUser = readByUser ;
+    this.domReference = null ;
+  }
 
-Book.prototype.display = function (index){
-  const card = createElement('div', '', 'card');
-  const cardFooter = createCardFooter(this);
-  card.append(
-    createElement('h1', this.title),
-    createElement('h2', this.author),
-    createElement('span', this.pagesCount + ' pages'),
-    cardFooter
-  );
-  this.domReference = card;
-  cardContainer.append(card);
+  display(){
+    const card = createElement('div', '', 'card');
+    const cardFooter = createCardFooter(this);
+    card.append(
+      createElement('h1', this.title),
+      createElement('h2', this.author),
+      createElement('span', this.pagesCount + ' pages'),
+      cardFooter
+    );
+    this.domReference = card;
+    cardContainer.append(card);
+  }
+
+  delete(){
+    this.domReference.remove();
+  }
 }
 
 for (let i = 0; i < myLibrary.length; i++) {
@@ -53,10 +59,6 @@ function assignIndices(){
   });
 }
 
-Book.prototype.delete = function() {
-  this.domReference.remove();
-}
-
 function createIcon(name, action) {
   const icon = createElement('ion-icon');
   icon.name = name;
@@ -81,39 +83,48 @@ function changeReadStatus() {
   this.classList.toggle('read');
 }
 
-// modal generation
-function Modal(title, type) {
-  this.content = createElement(type, '', 'content');
-  this.title = createElement('h1', title);
-  this.actions = createElement('div', '', 'actions');
+class Modal {
+  constructor(title, type){
+    this.content = createElement(type, '', 'content');
+    this.title = createElement('h1', title);
+    this.actions = createElement('div', '', 'actions');
+  }
+
+  build(){
+    this.content.insertBefore(this.title, this.content.firstElementChild);
+    this.content.append(this.actions);
+  }
+
+  display(){
+    this.build();
+    const root = createElement('div', '', 'modal');
+    root.append(this.content);
+  
+    root.addEventListener('click', (e) => {
+      if(e.target === root) this.dismiss();
+    })
+  
+    this.domReference = root;
+    pageContainer.append(root);
+  }
+
+  dismiss(){
+    deleteValues();
+    this.domReference.remove()
+  }
 }
 
-Modal.prototype.build = function() {
-  this.content.insertBefore(this.title, this.content.firstElementChild);
-  this.content.append(this.actions);
-}
-
-Modal.prototype.display = function() {
-  this.build();
-  const root = createElement('div', '', 'modal');
-  root.append(this.content);
-
-  root.addEventListener('click', (e) => {
-    if(e.target === root) this.dismiss();
-  })
-
-  this.domReference = root;
-  pageContainer.append(root);
-}
-
-Modal.prototype.dismiss = function() {
-  deleteValues();
-  this.domReference.remove()
-}
-
-function ModalAction(name, action){
-  this.name = name;
-  this.action = action;
+class ModalAction {
+  constructor(name, action) {
+    this.name = name;
+    this.action = action;
+  }
+  toNode(cls, type = 'button') {
+    const root = createElement('button', this.name, cls);
+    root.type = type;
+    root.addEventListener('click', this.action);
+    return root;
+  }
 }
 
 HTMLElement.prototype.addInputPair = function (type, id, label, placeholder = ''){
@@ -122,13 +133,6 @@ HTMLElement.prototype.addInputPair = function (type, id, label, placeholder = ''
     ? this.append(input, createLabel(id, label)) 
     : this.append( createLabel(id, label), input );
   return input;
-}
-
-ModalAction.prototype.toNode = function(cls, type = 'button'){
-  const root = createElement('button', this.name, cls);
-  root.type = type;
-  root.addEventListener('click', this.action)
-  return root
 }
 
 function createLabel(id, content) {
